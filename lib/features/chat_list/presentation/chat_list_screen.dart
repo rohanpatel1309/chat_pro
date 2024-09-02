@@ -54,16 +54,16 @@ class _ChatListScreenState extends State<ChatListScreen> with SingleTickerProvid
         padding: EdgeInsets.only(top: 40.h),
         child: Column(
           children: [
-            Expanded(
+            const Expanded(
               child: SearchAndRecentChat(),
             ),
             SizedBox(height: 20.h),
-            Expanded(
+            const Expanded(
               flex: 2,
               child: ChatPeopleList(),
             ),
             SizedBox(height: 20.h),
-            Expanded(
+            const Expanded(
               flex: 10,
               child: RecentChatsList(),
             ),
