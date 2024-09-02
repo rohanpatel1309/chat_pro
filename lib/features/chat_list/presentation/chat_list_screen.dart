@@ -1,5 +1,4 @@
 import 'package:chat_pro/core/utils/color_assets.dart';
-import 'package:chat_pro/core/utils/string_assets.dart';
 import 'package:chat_pro/core/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -47,29 +46,30 @@ class _ChatListScreenState extends State<ChatListScreen> with SingleTickerProvid
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Container(
         color: ColorAssets.backgroundColor,
         width: double.infinity,
         height: double.infinity,
-        padding: EdgeInsets.symmetric(vertical: 40.h),
+        padding: EdgeInsets.only(top: 40.h),
         child: Column(
           children: [
-            const SearchAndRecentChat(),
-            SizedBox(height: 20.h), // Spacing between search and chat lists
-            const Expanded(
-              flex: 2,
-              child: ChatPeopleList(), // Wrap ChatPeopleList with Expanded
-            ),
-            SizedBox(height: 20.h), // Spacing between chat people and recent chats
             Expanded(
-              flex: 8,
-              child: SlideTransition(
-                position: _slideAnimation,
-                child: const RecentChatsList(),
-              ),
+              child: SearchAndRecentChat(),
+            ),
+            SizedBox(height: 20.h),
+            Expanded(
+              flex: 2,
+              child: ChatPeopleList(),
+            ),
+            SizedBox(height: 20.h),
+            Expanded(
+              flex: 10,
+              child: RecentChatsList(),
             ),
           ],
         ),
+
       ),
     );
   }
@@ -94,15 +94,14 @@ class ChatPeopleList extends StatelessWidget {
       'https://randomuser.me/api/portraits/women/5.jpg',
     ];
 
-    return Container(
-      padding: EdgeInsets.only(top: 8.h),
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemCount: imageUrls.length, // Use the length of imageUrls list
-        itemBuilder: (context, index) {
-          return Container(
-            width: 80.w, // Adjust width as needed
-            margin: EdgeInsets.symmetric(horizontal: 8.w),
+    return ListView.builder(
+      scrollDirection: Axis.horizontal,
+      itemCount: imageUrls.length, // Use the length of imageUrls list
+      itemBuilder: (context, index) {
+        return Container(
+          width: 80.w, // Adjust width as needed
+          margin: EdgeInsets.symmetric(horizontal: 8.w),
+          child: FittedBox(
             child: Column(
               children: [
                 CircleAvatar(
@@ -114,9 +113,9 @@ class ChatPeopleList extends StatelessWidget {
                 Text('Person $index', style: CustomTextStyle.normalStyle), // Replace with your data
               ],
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }
@@ -140,20 +139,28 @@ class RecentChatsList extends StatelessWidget {
       'https://randomuser.me/api/portraits/women/10.jpg',
     ];
 
-    return ListView.builder(
-      padding: EdgeInsets.zero,
-      itemCount: recentChatImages.length, // Use the length of recentChatImages list
-      itemBuilder: (context, index) {
-        return ListTile(
-          leading: CircleAvatar(
-            backgroundImage: NetworkImage(recentChatImages[index]), // Use network image
-            backgroundColor: Colors.grey,
-          ),
-          title: Text('Chat $index', style: CustomTextStyle.mediumStyle), // Replace with your data
-          subtitle: Text('Recent message preview', style: CustomTextStyle.normalStyle), // Replace with your data
-          trailing: Text('10:00 AM', style: CustomTextStyle.normalStyle), // Replace with your data
-        );
-      },
+    return Container(
+      padding: EdgeInsets.only(top: 10.h),
+      decoration: BoxDecoration(
+        color: Colors.white12,
+        borderRadius: BorderRadius.only(topLeft: Radius.circular(40.h),topRight: Radius.circular(40.h))
+
+      ),
+      child: ListView.builder(
+        padding: EdgeInsets.zero,
+        itemCount: recentChatImages.length, // Use the length of recentChatImages list
+        itemBuilder: (context, index) {
+          return ListTile(
+            leading: CircleAvatar(
+              backgroundImage: NetworkImage(recentChatImages[index]), // Use network image
+              backgroundColor: Colors.grey,
+            ),
+            title: Text('Chat $index', style: CustomTextStyle.mediumStyle), // Replace with your data
+            subtitle: Text('Recent message preview', style: CustomTextStyle.normalStyle), // Replace with your data
+            trailing: Text('10:00 AM', style: CustomTextStyle.normalStyle), // Replace with your data
+          );
+        },
+      ),
     );
   }
 }
@@ -178,35 +185,37 @@ class Search extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 5.h),
-      margin: EdgeInsets.symmetric(horizontal: 16.w),
-      decoration: BoxDecoration(
-        color: Colors.white, // White background for the search bar
-        borderRadius: BorderRadius.circular(30), // Rounded corners
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            blurRadius: 8,
-            offset: const Offset(0, 4), // Shadow effect
-          ),
-        ],
-      ),
-      child: Row(
-        children: [
-          Icon(Icons.search, color: Colors.grey,size: 25.sp,), // Search icon
-          SizedBox(width: 10.w),
-          Expanded(
-            child: TextField(
-              decoration: InputDecoration(
-                hintText: 'Search...',
-                border: InputBorder.none, // No border for the TextField
-                hintStyle: CustomTextStyle.mediumStyle.copyWith(color: Colors.grey),
-              ),
-              style: CustomTextStyle.normalStyle, // Adjust style as needed
+    return Expanded(
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 16.w, ),
+        margin: EdgeInsets.symmetric(horizontal: 16.w),
+        decoration: BoxDecoration(
+          color: Colors.white, // White background for the search bar
+          borderRadius: BorderRadius.circular(30), // Rounded corners
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              blurRadius: 8,
+              offset: const Offset(0, 4), // Shadow effect
             ),
-          ),
-        ],
+          ],
+        ),
+        child: Row(
+          children: [
+            Icon(Icons.search, color: Colors.grey,size: 25.sp,), // Search icon
+            SizedBox(width: 10.w),
+            Expanded(
+              child: TextField(
+                decoration: InputDecoration(
+                  hintText: 'Search...',
+                  border: InputBorder.none, // No border for the TextField
+                  hintStyle: CustomTextStyle.mediumStyle.copyWith(color: Colors.grey),
+                ),
+                style: CustomTextStyle.normalStyle, // Adjust style as needed
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
