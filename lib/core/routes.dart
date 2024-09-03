@@ -29,7 +29,7 @@ class AppRoutes {
       case chatViewScreen:
         return _materialRoute(const ChatViewScreen());
       default:
-        return _materialRoute(const ChatViewScreen());
+        return _materialRoute(const ChatListScreen());
     }
   }
 

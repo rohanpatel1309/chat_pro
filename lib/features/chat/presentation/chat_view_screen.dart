@@ -160,15 +160,25 @@ class MessageList extends StatelessWidget {
                   margin:  EdgeInsets.symmetric(vertical: 8.h),
                   // Add margin between messages
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(15.h),
+                    color: index % 2 == 0 ? Colors.white12 : Colors.white60,
                   ),
                   padding: const EdgeInsets.all(10.0),
                   // Add padding inside the container
-                  child: Text(
-                    msg[index],
-                    style: CustomTextStyle.mediumStyle.copyWith(
-                        color: Colors.black),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(
+                        msg[index],
+                        style: CustomTextStyle.normalStyle.copyWith(
+                            color: index % 2 == 1 ? Colors.black : Colors.white),
+                      ),
+                      Text(
+                        "08:00 PM",
+                        style: CustomTextStyle.normalStyle.copyWith(fontSize: 9.sp,
+                            color: index % 2 == 1 ? Colors.black : Colors.white),
+                      ),
+                    ],
                   ),
                 ),
               ],
