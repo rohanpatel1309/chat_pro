@@ -99,18 +99,18 @@ class ChatPeopleList extends StatelessWidget {
       itemCount: imageUrls.length, // Use the length of imageUrls list
       itemBuilder: (context, index) {
         return Container(
-          width: 80.w, // Adjust width as needed
+          width: 80.w,
           margin: EdgeInsets.symmetric(horizontal: 8.w),
           child: FittedBox(
             child: Column(
               children: [
                 CircleAvatar(
-                  radius: 30.w, // Adjust radius as needed
-                  backgroundImage: NetworkImage(imageUrls[index]), // Use network image
+                  radius: 30.w,
+                  backgroundImage: NetworkImage(imageUrls[index]),
                   backgroundColor: Colors.grey,
                 ),
                 SizedBox(height: 8.h),
-                Text('Person $index', style: CustomTextStyle.normalStyle), // Replace with your data
+                Text('Person $index', style: CustomTextStyle.normalStyle),
               ],
             ),
           ),
@@ -179,7 +179,7 @@ class SearchAndRecentChat extends StatelessWidget {
   }
 }
 
-/// Search with a white background and icons
+/// Search with icons
 class Search extends StatelessWidget {
   const Search({super.key});
 
